@@ -13,7 +13,9 @@
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <router-view></router-view>
+    </div>
 </body>
 
 </html>
