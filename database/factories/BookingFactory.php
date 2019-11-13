@@ -5,6 +5,7 @@
 use App\Booking;
 use Faker\Generator as Faker;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 $factory->define(Booking::class, function (Faker $faker) {
     $from = Carbon::instance($faker->dateTimeBetween('-1 months', '+1 months'));
@@ -12,6 +13,7 @@ $factory->define(Booking::class, function (Faker $faker) {
 
     return [
         'from' => $from,
-        'to' => $to
+        'to' => $to,
+        'review_key' => (string) Str::uuid()
     ];
 });

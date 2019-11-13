@@ -3,6 +3,7 @@
 use App\Bookable;
 use App\Booking;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class BookingsTableSeeder extends Seeder
 {
@@ -23,7 +24,8 @@ class BookingsTableSeeder extends Seeder
 
                 $booking = Booking::make([
                     'from' => $from,
-                    'to' => $to
+                    'to' => $to,
+                    'review_key' => Str::uuid()
                 ]);
                 $bookings->push($booking);
             }
