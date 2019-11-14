@@ -55,7 +55,6 @@ export default {
       .then(response => (this.review = response.data))
       .catch(error => {
         if (404 === error.response.status) {
-          this.review = false;
           return axios.get(`/api/booking-by-reviews/${this.$route.params.id}`);
         }
       })
@@ -87,7 +86,13 @@ export default {
   },
   computed: {
     alreadyReviewed() {
-      return this.review || this.booking === null;
+      return this.hasReview || !this.hasBooking;
+    },
+    hasReview() {
+      return null !== this.review;
+    },
+    hasBooking() {
+      return null !== this.booking;
     }
   }
 };
