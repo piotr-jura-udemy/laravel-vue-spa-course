@@ -2,10 +2,11 @@
   <div style="padding: 1.25rem">
     <h6 class="text-uppercase text-secondary font-weight-bolder pt-4">
       Reviews
-      <span v-if="reviews">({{ reviews.length }})</span>
+      <!-- <span v-if="reviews">({{ reviews.length }})</span> -->
     </h6>
 
-    <div v-if="loading">Loading reviews...</div>
+    <code-loader primary-color="#fff" secondary-color="#f0f0f0" v-if="loading"></code-loader>
+
     <div v-else>
       <div class="border-bottom d-none d-md-block" v-for="review in reviews" :key="review.id">
         <div class="row pt-4">
@@ -36,7 +37,12 @@
 </template>
 
 <script>
+import { CodeLoader } from "vue-content-loader";
+
 export default {
+  components: {
+    CodeLoader
+  },
   data() {
     return {
       loading: false,
@@ -44,6 +50,7 @@ export default {
     };
   },
   created() {
+    this.loading = true;
     axios
       .get(`/api/bookables/${this.$route.params.id}/reviews`)
       .then(response => (this.reviews = response.data))

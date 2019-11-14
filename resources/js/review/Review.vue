@@ -1,22 +1,45 @@
 <template>
-  <div>
-    <div v-if="loading">Loading...</div>
-    <div v-else>
-      <div v-if="alreadyReviewed">You've already left a review, or the review link is invalid!</div>
+  <div class="row">
+    <div
+      :class="[{'col-md-4': loading || !alreadyReviewed }, {'d-none': !loading && alreadyReviewed}]"
+    >
+      <div class="card">
+        <div class="card-body">
+          <list-loader v-if="loading" class="w-100">Loading...</list-loader>
+          <div v-if="!loading && !alreadyReviewed">
+            Stayed at
+            <router-link
+              :to="{name: 'bookable', params: { id: booking.bookable_id }}"
+            >{{ booking.bookable.title }}</router-link>
+            <p>From {{ booking.from }} to {{ booking.to }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      :class="[{'col-md-8': loading || !alreadyReviewed }, {'col-md-12': !loading && alreadyReviewed}]"
+    >
+      <!-- <div v-if="loading">Loading...</div> -->
+      <list-loader v-if="loading" primary-color="#fff" secondary-color="#f0f0f0"></list-loader>
       <div v-else>
-        <h6
-          class="text-uppercase text-secondary font-weight-bolder pt-4"
-        >You are reviewing {{ booking.bookable.title }}, you've stayed there from {{ booking.from }} to {{ booking.to }}</h6>
-        <label for="content">Leave a review</label>
-        <textarea class="form-control mb-4" v-model="content" name="content"></textarea>
-        <button @click="submit" class="btn btn-primary btn-lg btn-block">Send!</button>
+        <div v-if="alreadyReviewed">You've already left a review, or the review link is invalid!</div>
+        <div v-else>
+          <label for="content">Describe your expierience</label>
+          <textarea class="form-control mb-4" v-model="content" name="content"></textarea>
+          <button @click="submit" class="btn btn-primary btn-lg btn-block">Send!</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ListLoader } from "vue-content-loader";
+
 export default {
+  components: {
+    ListLoader
+  },
   data() {
     return {
       review: null,

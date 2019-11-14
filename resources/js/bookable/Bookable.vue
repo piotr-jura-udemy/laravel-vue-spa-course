@@ -3,19 +3,22 @@
     <div class="col-md-8 pb-4">
       <div class="card">
         <div class="card-body">
-          <div v-if="!loading">
+          <list-loader v-if="loading">Loading...</list-loader>
+          <div v-else>
             <h2>{{ bookable.title }}</h2>
             <hr />
             <article>{{ bookable.description }}</article>
           </div>
-          <div v-else>Loading...</div>
         </div>
       </div>
 
       <review-list></review-list>
     </div>
     <div class="col-md-4 pb-4">
-      <availability></availability>
+      <list-loader v-if="loading" primary-color="#fff" secondary-color="#f0f0f0">Loading...</list-loader>
+      <div v-else>
+        <availability></availability>
+      </div>
     </div>
   </div>
 </template>
@@ -24,10 +27,13 @@
 import Availability from "./Availability";
 import ReviewList from "./ReviewList";
 
+import { ListLoader } from "vue-content-loader";
+
 export default {
   components: {
     Availability,
-    ReviewList
+    ReviewList,
+    ListLoader
   },
   data() {
     return {
