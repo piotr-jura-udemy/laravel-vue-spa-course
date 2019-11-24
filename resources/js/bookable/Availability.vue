@@ -16,13 +16,9 @@
           placeholder="Start date"
           v-model="from"
           @keyup.enter="check"
-          :class="[{'is-invalid': this.errorFor('from')}]"
+          :class="[{'is-invalid': errorFor('from')}]"
         />
-        <div
-          class="invalid-feedback"
-          v-for="(error, index) in this.errorFor('from')"
-          :key="'from' + index"
-        >{{ error }}</div>
+        <v-errors :errors="errorFor('from')"></v-errors>
       </div>
 
       <div class="form-group col-md-6">
@@ -34,13 +30,9 @@
           placeholder="End date"
           v-model="to"
           @keyup.enter="check"
-          :class="[{'is-invalid': this.errorFor('to')}]"
+          :class="[{'is-invalid': errorFor('to')}]"
         />
-        <div
-          class="invalid-feedback"
-          v-for="(error, index) in this.errorFor('to')"
-          :key="'to' + index"
-        >{{ error }}</div>
+        <v-errors :errors="errorFor('to')"></v-errors>
       </div>
     </div>
 
