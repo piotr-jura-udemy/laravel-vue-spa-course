@@ -1,8 +1,8 @@
 <template>
   <div class="text-center error">
     <i class="fas fa-bomb"></i>
-    <h1 class="mt-4">Something bad has happened...</h1>
-    <h2>Try refreshing the page</h2>
+    <h1 class="mt-4">We've encountered a problem</h1>
+    <h2>Unfortunately we cannot proceed</h2>
   </div>
 </template>
 
@@ -10,6 +10,6 @@
 .error {
   color: #999;
   /* text-shadow: px 3px 0px #666; */
-  font-size: 20rem;
+  font-size: 10rem;
 }
 </style>

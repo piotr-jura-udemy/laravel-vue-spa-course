@@ -1,6 +1,6 @@
 <template>
   <div>
-    <fatal-error v-if="true"></fatal-error>
+    <fatal-error v-if="error"></fatal-error>
 
     <div class="row" v-else>
       <div :class="[{'col-md-4': twoColumns}, {'d-none': oneColumn}]">
