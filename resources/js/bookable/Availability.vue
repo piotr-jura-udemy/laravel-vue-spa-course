@@ -2,8 +2,10 @@
   <div>
     <h6 class="text-uppercase text-secondary font-weight-bolder">
       Check Availability
-      <span v-if="noAvailability" class="text-danger">(NOT AVAILABLE)</span>
-      <span v-if="hasAvailability" class="text-success">(AVAILABLE)</span>
+      <transition name="fade">
+        <span v-if="noAvailability" class="text-danger">(NOT AVAILABLE)</span>
+        <span v-if="hasAvailability" class="text-success">(AVAILABLE)</span>
+      </transition>
     </h6>
 
     <div class="form-row">
@@ -36,7 +38,11 @@
       </div>
     </div>
 
-    <button class="btn btn-secondary btn-block" @click="check" :disabled="loading">Check!</button>
+    <button class="btn btn-secondary btn-block" @click="check" :disabled="loading">
+      <span v-if="!loading">Check!</span>
+      <i class="fas fa-circle-notch fa-spin" v-if="loading"></i>
+      <span v-if="loading">Checking...</span>
+    </button>
   </div>
 </template>
 
@@ -54,33 +60,42 @@ export default {
       from: this.$store.state.lastSearch.from,
       to: this.$store.state.lastSearch.to,
       loading: false,
-      status: null
+      status: null,
+      price: null
     };
   },
   methods: {
-    check() {
+    async check() {
       this.loading = true;
       this.errors = null;
-
       this.$store.dispatch("setLastSearch", {
         from: this.from,
         to: this.to
       });
 
-      axios
-        .get(
-          `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
-        )
-        .then(response => {
-          this.status = response.status;
-        })
-        .catch(error => {
-          if (is422(error)) {
-            this.errors = error.response.data.errors;
-          }
-          this.status = error.response.status;
-        })
-        .then(() => (this.loading = false));
+      try {
+        this.status = (await axios.get(this.url("availability"))).status;
+        this.$emit("availability", this.hasAvailability);
+      } catch (err) {
+        if (is422(err)) {
+          this.errors = err.response.data.errors;
+        }
+
+        this.status = err.response.status || 500;
+        this.$emit("availability", this.hasAvailability);
+      }
+
+      try {
+        this.price = (await axios.get(this.url("price"))).data.data;
+        this.$emit("price", this.price);
+      } catch (err) {
+        this.$emit("price", null);
+      }
+
+      this.loading = false;
+    },
+    url(askingFor) {
+      return `/api/bookables/${this.bookableId}/${askingFor}?from=${this.from}&to=${this.to}`;
     }
   },
   computed: {

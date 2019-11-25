@@ -15,7 +15,17 @@
       <review-list :bookable-id="this.$route.params.id"></review-list>
     </div>
     <div class="col-md-4 pb-4">
-      <availability :bookable-id="this.$route.params.id"></availability>
+      <availability
+        :bookable-id="this.$route.params.id"
+        @availability="hasAvailability=$event"
+        @price="price=$event"
+        class="mb-4"
+      ></availability>
+      <transition name="fade">
+        <price-breakdown v-if="hasAvailability" :price="price" class="mb-4"></price-breakdown>
+      </transition>
+
+      <button class="btn btn-outline-secondary btn-block" v-if="hasAvailability">Book now</button>
     </div>
   </div>
 </template>
@@ -23,16 +33,23 @@
 <script>
 import Availability from "./Availability";
 import ReviewList from "./ReviewList";
+import PriceBreakdown from "./PriceBreakdown";
 
 export default {
   components: {
     Availability,
-    ReviewList
+    ReviewList,
+    PriceBreakdown
   },
   data() {
     return {
       bookable: null,
-      loading: false
+      loading: false,
+      hasAvailability: null,
+      price: {
+        breakdown: {},
+        total: null
+      }
     };
   },
   created() {
@@ -41,6 +58,11 @@ export default {
       this.bookable = response.data.data;
       this.loading = false;
     });
+  },
+  methods: {
+    addToBasket() {
+      //
+    }
   }
 };
 </script>
