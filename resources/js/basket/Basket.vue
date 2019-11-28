@@ -6,31 +6,81 @@
         <div class="row">
           <div class="col form-group">
             <label for>First name</label>
-            <input type="text" class="form-control" placeholder="First name" />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="First name"
+              v-model="customer.first_names"
+              :class="[{'is-invalid': errorFor('customer.first_names')}]"
+            />
+            <v-errors :errors="errorFor('customer.first_names')"></v-errors>
           </div>
           <div class="col form-group">
-            <label for>Last name</label>
-            <input type="text" class="form-control" placeholder="Last name" />
+            <label for>Surname</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Last name"
+              v-model="customer.surname"
+              :class="[{'is-invalid': errorFor('customer.surname')}]"
+            />
+            <v-errors :errors="errorFor('customer.surname')"></v-errors>
           </div>
         </div>
         <div class="row">
           <div class="col form-group">
             <label for>Address</label>
-            <input type="text" class="form-control" placeholder="E-mail" />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="E-mail"
+              v-model="customer.address"
+              :class="[{'is-invalid': errorFor('customer.address')}]"
+            />
+            <v-errors :errors="errorFor('customer.address')"></v-errors>
+          </div>
+          <div class="col form-group">
+            <label for>E-mail</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="E-mail"
+              v-model="customer.email"
+              :class="[{'is-invalid': errorFor('customer.email')}]"
+            />
+            <v-errors :errors="errorFor('customer.email')"></v-errors>
           </div>
         </div>
         <div class="row">
           <div class="col form-group">
             <label for>Country</label>
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="customer.country"
+              :class="[{'is-invalid': errorFor('customer.country')}]"
+            />
+            <v-errors :errors="errorFor('customer.country')"></v-errors>
           </div>
           <div class="col form-group">
             <label for>State</label>
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="customer.state"
+              :class="[{'is-invalid': errorFor('customer.state')}]"
+            />
+            <v-errors :errors="errorFor('customer.state')"></v-errors>
           </div>
           <div class="col form-group">
             <label for>Zip</label>
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="customer.zip"
+              :class="[{'is-invalid': errorFor('customer.zip')}]"
+            />
+            <v-errors :errors="errorFor('customer.zip')"></v-errors>
           </div>
         </div>
         <div class="row">
@@ -51,6 +101,10 @@
 
       <transition-group name="fade" tag="div">
         <div v-for="item in basket" :key="item.bookable.id">
+          <div
+            class="pt-2 pb-2 text-danger"
+            v-if="cannotBook.includes(item.bookable.id)"
+          >This item cannot be booked right now. Please remove it from the basket and try again.</div>
           <div class="pt-2 pb-2 border-top d-flex justify-content-between">
             <span>
               <router-link
@@ -79,11 +133,24 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import validationErrors from "./../shared/mixins/validationErrors";
+import { is422 } from "../shared/utils/response";
 
 export default {
+  mixins: [validationErrors],
   data() {
     return {
-      loading: false
+      loading: false,
+      customer: {
+        first_names: null,
+        surname: null,
+        address: null,
+        email: null,
+        country: null,
+        state: null,
+        zip: null
+      },
+      cannotBook: []
     };
   },
   computed: {
@@ -95,16 +162,36 @@ export default {
   methods: {
     async book() {
       this.loading = true;
+      this.errors = null;
+      this.cannotBook = [];
 
-      try {
-        await Promise.all(
-          this.basket.map(async ({ bookable, dates }) => {
-            await axios.get(
-              `/api/bookables/${bookable.id}/availability?from=${dates.from}&to=${dates.to}`
-            );
-          })
-        );
-      } catch (err) {}
+      await Promise.all(
+        this.basket.map(async ({ bookable, dates }) => {
+          await axios.get(
+            `/api/bookables/${bookable.id}/availability?from=${dates.from}&to=${
+              dates.to
+            }`
+          );
+          try {
+            await axios.post(`/api/bookings`, {
+              bookable,
+              dates,
+              customer: this.customer
+            });
+          } catch (err) {
+            if (is422(err)) {
+              this.errors = Object.assign(
+                this.errors || {},
+                err.response.data.errors || {}
+              );
+            }
+
+            if (!is422(err) || !err.response.data.errors) {
+              this.cannotBook.push(bookable.id);
+            }
+          }
+        })
+      );
 
       this.loading = false;
     }
