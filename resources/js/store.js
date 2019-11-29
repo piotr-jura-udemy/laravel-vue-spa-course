@@ -49,7 +49,7 @@ export default {
             commit("removeFromBasket", payload);
             localStorage.setItem("basket", JSON.stringify(state.basket));
         },
-        clearBasket({ commit }) {
+        clearBasket({ commit, state }) {
             commit("clearBasket");
             localStorage.setItem("basket", JSON.stringify(state.basket));
         }

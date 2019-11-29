@@ -100,6 +100,7 @@
               <button
                 type="submit"
                 class="btn btn-lg btn-primary btn-block"
+                :disabled="0 === itemsInBasket"
                 @click.prevent="book"
               >Book now!</button>
             </div>
@@ -227,6 +228,7 @@ export default {
         );
 
         if (0 === this.cannotBook.length && null === this.errors) {
+          console.log("Clearing basket...");
           this.$store.dispatch("clearBasket");
         }
       } catch (err) {}
