@@ -20,6 +20,9 @@ export default {
         },
         removeFromBasket(state, payload) {
             state.basket.items = state.basket.items.filter(item => item.bookable.id !== payload);
+        },
+        clearBasket(state) {
+            state.basket.items = [];
         }
     },
     actions: {
@@ -44,6 +47,10 @@ export default {
         },
         removeFromBasket({ commit, state }, payload) {
             commit("removeFromBasket", payload);
+            localStorage.setItem("basket", JSON.stringify(state.basket));
+        },
+        clearBasket({ commit }) {
+            commit("clearBasket");
             localStorage.setItem("basket", JSON.stringify(state.basket));
         }
     },
