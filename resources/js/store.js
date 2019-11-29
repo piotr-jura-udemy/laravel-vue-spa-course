@@ -12,23 +12,46 @@ export default {
         setLastSearch(state, payload) {
             state.lastSearch = payload;
         },
+        setBasket(state, payload) {
+            state.basket = payload;
+        },
         addToBasket(state, payload) {
             state.basket.items.push(payload);
         },
         removeFromBasket(state, payload) {
             state.basket.items = state.basket.items.filter(item => item.bookable.id !== payload);
+        },
+        clearBasket(state) {
+            state.basket.items = [];
         }
     },
     actions: {
-        setLastSearch(context, payload) {
-            context.commit('setLastSearch', payload);
+        setLastSearch({ commit }, payload) {
+            commit('setLastSearch', payload);
             localStorage.setItem('lastSearch', JSON.stringify(payload));
         },
-        loadStoredState(context) {
+        loadStoredState({ commit }) {
             const lastSearch = localStorage.getItem('lastSearch');
             if (lastSearch) {
-                context.commit('setLastSearch', JSON.parse(lastSearch));
+                commit('setLastSearch', JSON.parse(lastSearch));
             }
+
+            const basket = localStorage.getItem('basket');
+            if (basket) {
+                commit('setBasket', JSON.parse(basket));
+            }
+        },
+        addToBasket({ commit, state }, payload) {
+            commit("addToBasket", payload);
+            localStorage.setItem("basket", JSON.stringify(state.basket));
+        },
+        removeFromBasket({ commit, state }, payload) {
+            commit("removeFromBasket", payload);
+            localStorage.setItem("basket", JSON.stringify(state.basket));
+        },
+        clearBasket({ commit, state }) {
+            commit("clearBasket");
+            localStorage.setItem("basket", JSON.stringify(state.basket));
         }
     },
     getters: {
