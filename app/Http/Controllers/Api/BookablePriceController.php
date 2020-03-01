@@ -16,6 +16,7 @@ class BookablePriceController extends Controller
      */
     public function __invoke($id, Request $request)
     {
+        /** @var Bookable $bookable */
         $bookable = Bookable::findOrFail($id);
         $data = $request->validate([
             'from' => 'required|date_format:Y-m-d',
