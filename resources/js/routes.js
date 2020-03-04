@@ -24,6 +24,11 @@ const routes = [
         path: "/basket",
         component: Basket,
         name: "basket"
+    },
+    {
+        path: "/sign-in",
+        component: require("./auth/Login").default,
+        name: "login"
     }
 ];
 

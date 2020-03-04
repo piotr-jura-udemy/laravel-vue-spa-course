@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 Auth::routes();
 
-Route::get('/user', function (Request $request) {
+Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
 });
 

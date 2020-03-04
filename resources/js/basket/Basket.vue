@@ -132,12 +132,6 @@ export default {
   },
   methods: {
     async book() {
-      await axios.get("/airlock/csrf-cookie");
-      await axios.post("/login", {
-        email: "alexa.parisian@example.net",
-        password: "password"
-      });
-
       this.loading = true;
       this.bookingAttempted = false;
 
@@ -157,9 +151,6 @@ export default {
       this.loading = false;
       this.bookingAttempted = true;
     }
-  },
-  mounted() {
-    window.axios.get("/user");
   }
 };
 </script>

@@ -14,6 +14,7 @@
         <div class="col" v-for="p in placeholdersInRow(row)" :key="'placeholder' + row + p"></div>
       </div>
     </div>
+    <fatal-error v-if="error">Shit...</fatal-error>
   </div>
 </template>
 
@@ -28,7 +29,8 @@ export default {
     return {
       bookables: null,
       loading: false,
-      columns: 3
+      columns: 3,
+      error: false
     };
   },
   computed: {
@@ -49,10 +51,16 @@ export default {
   created() {
     this.loading = true;
 
-    const request = axios.get("/api/bookables").then(response => {
-      this.bookables = response.data.data;
-      this.loading = false;
-    });
+    const request = axios
+      .get("/api/bookables")
+      .then(response => {
+        this.bookables = response.data.data;
+        this.loading = false;
+      })
+      .catch(err => {
+        this.loading = false;
+        this.error = true;
+      });
   }
 };
 </script>

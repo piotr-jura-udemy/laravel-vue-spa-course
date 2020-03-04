@@ -3,6 +3,12 @@
     <nav class="navbar bg-white border-bottom navbar-light">
       <router-link class="navbar-brand mr-auto" :to="{name: 'home'}">LaravelBnb</router-link>
 
+      <a class="btn nav-button" href="#" v-if="isLoggedIn">
+        <span v-if="username">Hello {{ username }}</span>
+      </a>
+      <a class="btn nav-button" href="#" @click="logout" v-if="isLoggedIn">Logout</a>
+      <router-link :to="{name: 'login'}" class="btn nav-button" v-if="!isLoggedIn">Sign-in</router-link>
+
       <router-link class="btn nav-button" :to="{name: 'basket'}">
         Basket
         <span v-if="itemsInBasket" class="badge badge-secondary">{{ itemsInBasket }}</span>
@@ -17,6 +23,7 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
+import { logOut } from "./shared/utils/auth";
 
 export default {
   data() {
@@ -26,13 +33,22 @@ export default {
   },
   computed: {
     ...mapState({
-      lastSearchComputed: "lastSearch"
+      lastSearchComputed: "lastSearch",
+      username: state => state.user.name,
+      isLoggedIn: "isLoggedIn"
     }),
     ...mapGetters({
       itemsInBasket: "itemsInBasket"
     }),
     somethingElse() {
       return 1 + 2;
+    }
+  },
+  methods: {
+    logout() {
+      logOut();
+      this.$store.commit("setUser", {});
+      this.$store.commit("setLoggedIn", false);
     }
   }
 };
