@@ -5,6 +5,7 @@
 
       <a class="btn nav-button" href="#" v-if="isLoggedIn">
         <span v-if="username">Hello {{ username }}</span>
+        <span v-else>Wait for it...</span>
       </a>
       <a class="btn nav-button" href="#" @click="logout" v-if="isLoggedIn">Logout</a>
       <router-link :to="{name: 'login'}" class="btn nav-button" v-if="!isLoggedIn">Sign-in</router-link>

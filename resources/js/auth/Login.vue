@@ -26,7 +26,12 @@
           />
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg btn-block" @click.prevent="login">Log-in</button>
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg btn-block"
+          @click.prevent="login"
+          :disabled="loading"
+        >Log-in</button>
       </form>
     </div>
   </div>
@@ -38,27 +43,32 @@ import { logIn } from "./../shared/utils/auth";
 export default {
   data() {
     return {
+      loading: false,
       username: null,
       password: null
     };
   },
   methods: {
     async login() {
-      // Get CSRF cookie first
-      await axios.get("/airlock/csrf-cookie");
+      this.loading = true;
+
       try {
+        // Get CSRF cookie first
+        await axios.get("/airlock/csrf-cookie");
         // Attempt login
         await axios.post("/login", {
           email: this.username,
           password: this.password
         });
-
         logIn();
+
         this.$store.dispatch("loadUser");
-        this.$store.commit("setLoggedIn", true);
+        this.$router.push({ name: "home" });
       } catch (err) {
         this.status = (err.response && err.response.status) || 500;
       }
+
+      this.loading = false;
     }
   }
 };

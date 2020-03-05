@@ -52,16 +52,21 @@ export default {
 
             context.commit("setLoggedIn", isLoggedIn());
         },
-        async loadUser({ commit }) {
+        async loadUser({ commit, dispatch }) {
             if (isLoggedIn()) {
                 try {
                     const user = (await axios.get('/user')).data;
                     commit("setUser", user);
+                    commit("setLoggedIn", true);
                 } catch (e) {
-                    commit("setUser", {});
-                    logOut();
+                    dispatch("logout");
                 }
             }
+        },
+        logout({ commit }) {
+            commit("setUser", {});
+            commit("setLoggedIn", false);
+            logOut();
         },
         addToBasket({ commit, state }, payload) {
             // context.state, context.commit
