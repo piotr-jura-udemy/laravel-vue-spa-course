@@ -29,6 +29,11 @@ const routes = [
         path: "/sign-in",
         component: require("./auth/Login").default,
         name: "login"
+    },
+    {
+        path: "/do-register",
+        component: require("./auth/Register").default,
+        name: "register"
     }
 ];
 

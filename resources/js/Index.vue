@@ -8,6 +8,8 @@
         <span v-else>Wait for it...</span>
       </a>
       <a class="btn nav-button" href="#" @click="logout" v-if="isLoggedIn">Logout</a>
+
+      <router-link :to="{name: 'register'}" class="btn nav-button" v-if="!isLoggedIn">Register</router-link>
       <router-link :to="{name: 'login'}" class="btn nav-button" v-if="!isLoggedIn">Sign-in</router-link>
 
       <router-link class="btn nav-button" :to="{name: 'basket'}">
