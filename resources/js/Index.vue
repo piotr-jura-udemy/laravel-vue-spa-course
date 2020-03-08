@@ -49,9 +49,14 @@ export default {
   },
   methods: {
     logout() {
-      logOut();
-      this.$store.commit("setUser", {});
-      this.$store.commit("setLoggedIn", false);
+      try {
+        const response = axios.post("/logout");
+        logOut();
+        this.$store.commit("setUser", {});
+        this.$store.commit("setLoggedIn", false);
+      } catch (error) {
+        alert("Sth went wrong");
+      }
     }
   }
 };

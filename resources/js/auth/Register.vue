@@ -67,6 +67,7 @@
 
 <script>
 import validationErrors from "./../shared/mixins/validationErrors";
+import { logIn } from "../shared/utils/auth";
 
 export default {
   mixins: [validationErrors],
@@ -84,6 +85,12 @@ export default {
     async register() {
       try {
         const response = await axios.post("/register", this.user);
+
+        if (201 == response.status) {
+          logIn();
+          this.$store.dispatch("loadUser");
+          this.$router.push({ name: "home" });
+        }
       } catch (error) {
         this.errors = error.response.data.errors;
       }
