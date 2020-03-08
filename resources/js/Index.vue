@@ -1,21 +1,41 @@
 <template>
   <div>
-    <nav class="navbar bg-white border-bottom navbar-light">
+    <nav class="navbar navbar-expand-lg bg-white sticky-top border-bottom navbar-light">
       <router-link class="navbar-brand mr-auto" :to="{name: 'home'}">LaravelBnb</router-link>
 
-      <a class="btn nav-button" href="#" v-if="isLoggedIn">
-        <span v-if="username">Hello {{ username }}</span>
-        <span v-else>Wait for it...</span>
-      </a>
-      <a class="btn nav-button" href="#" @click="logout" v-if="isLoggedIn">Logout</a>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <router-link class="nav-link" :to="{name: 'basket'}">
+            Basket
+            <span v-if="itemsInBasket" class="badge badge-secondary">{{ itemsInBasket }}</span>
+          </router-link>
+        </li>
 
-      <router-link :to="{name: 'register'}" class="btn nav-button" v-if="!isLoggedIn">Register</router-link>
-      <router-link :to="{name: 'login'}" class="btn nav-button" v-if="!isLoggedIn">Sign-in</router-link>
+        <li class="nav-item dropdown" v-if="isLoggedIn">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >Account</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Profile</a>
 
-      <router-link class="btn nav-button" :to="{name: 'basket'}">
-        Basket
-        <span v-if="itemsInBasket" class="badge badge-secondary">{{ itemsInBasket }}</span>
-      </router-link>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" @click="logout">Logout</a>
+          </div>
+        </li>
+
+        <li class="nav-item" v-if="!isLoggedIn">
+          <router-link :to="{name: 'register'}" class="nav-link">Register</router-link>
+        </li>
+        <li class="nav-item" v-if="!isLoggedIn">
+          <router-link :to="{name: 'login'}" class="nav-link">Sign-in</router-link>
+        </li>
+      </ul>
     </nav>
 
     <div class="container mt-4 mb-4 pr-4 pl-4">
