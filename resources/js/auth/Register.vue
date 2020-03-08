@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex w-75 m-auto align-items-center">
-    <div class="card-body">
+  <div class="d-flex w-50 m-auto align-items-center">
+    <div class="card card-body">
       <form>
         <div class="form-group">
           <label for="name">Name</label>
@@ -61,6 +61,12 @@
           :disabled="false"
         >Register</button>
       </form>
+
+      <hr />
+      <span class="text-nowrap">
+        Already have an account?
+        <router-link :to="{name: 'login'}" class="font-weight-bold">Login</router-link>
+      </span>
     </div>
   </div>
 </template>

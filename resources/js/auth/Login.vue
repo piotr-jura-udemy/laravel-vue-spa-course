@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex w-50 m-auto align-items-center">
-    <div class="card-body">
+    <div class="card card-body">
       <form>
         <div class="form-group">
           <label for="email">E-mail</label>
@@ -37,6 +37,16 @@
           :disabled="loading"
         >Log-in</button>
       </form>
+
+      <hr />
+      <span class="text-nowrap">
+        No account yet?
+        <router-link :to="{name: 'register'}" class="font-weight-bold">Register</router-link>
+      </span>
+      <span class="text-nowrap">
+        Forgotten password?
+        <router-link :to="{name: 'login'}" class="font-weight-bold">Reset password</router-link>
+      </span>
     </div>
   </div>
 </template>
