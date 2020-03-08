@@ -45,7 +45,7 @@
       </span>
       <span class="text-nowrap">
         Forgotten password?
-        <router-link :to="{name: 'login'}" class="font-weight-bold">Reset password</router-link>
+        <router-link :to="{name: 'password-reset'}" class="font-weight-bold">Reset password</router-link>
       </span>
     </div>
   </div>
