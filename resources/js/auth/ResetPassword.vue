@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex w-50 m-auto align-items-center">
-    <div class="card card-body">
+    <div class="card card-body" v-if="!success">
       <form>
         <div class="form-group">
           <label for="email">E-mail</label>
@@ -50,6 +50,10 @@
         >Reset password</button>
       </form>
     </div>
+    <success v-if="success">
+      Password updated, you can now login using new credentials
+      <router-link :to="{name: 'login'}" class="font-weight-bold">here</router-link>.
+    </success>
   </div>
 </template>
 
@@ -65,7 +69,8 @@ export default {
         password: null,
         password_confirmation: null
       },
-      loading: false
+      loading: false,
+      success: false
     };
   },
   methods: {
@@ -73,12 +78,14 @@ export default {
       this.loading = true;
 
       try {
+        this.errors = null;
         const response = await axios.post("/password/reset", {
           ...this.user,
           token: this.$route.params.token
         });
+        this.success = true;
       } catch (error) {
-        this.errors = error.response.data.errors;
+        this.errors = error.response && error.response.data.errors;
       }
 
       this.loading = false;
