@@ -5,6 +5,7 @@ import VueRouter from "vue-router";
 import Vuex from 'vuex';
 import Index from "./Index";
 import router from "./routes";
+import ColumnView from "./shared/components/ColumnView";
 import FatalError from "./shared/components/FatalError";
 import StarRating from "./shared/components/StarRating";
 import Success from "./shared/components/Success";
@@ -21,6 +22,7 @@ Vue.component("star-rating", StarRating);
 Vue.component("fatal-error", FatalError);
 Vue.component("success", Success);
 Vue.component("v-errors", ValidationErrors);
+Vue.component("column-view", ColumnView);
 
 const store = new Vuex.Store(storeDefinition);
 
@@ -37,7 +39,7 @@ axios.interceptors.response.use(
 
 const app = new Vue({
     el: "#app",
-    router,
+    router: router(store),
     store,
     components: {
         index: Index

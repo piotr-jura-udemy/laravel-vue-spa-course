@@ -43,13 +43,35 @@ const routes = [
     {
         path: "/auth/reset/:token",
         component: require("./auth/ResetPassword").default,
-        name: "password-reset"
+        name: "password-reset-token"
+    },
+    {
+        path: "/account/trips",
+        component: require("./myaccount/Trips").default,
+        name: "trips",
+        meta: {
+            requiresAuth: true
+        }
     }
 ];
 
-const router = new VueRouter({
-    routes, // short for `routes: routes`
-    mode: "history"
-});
+export default function router(store) {
+    const router = new VueRouter({
+        routes, // short for `routes: routes`
+        mode: "history"
+    });
 
-export default router;
+    router.beforeEach((to, from, next) => {
+        if (to.matched.some(record => record.meta.requiresAuth)) {
+            if (!store.state.isLoggedIn) {
+                next({ name: "login" });
+            } else {
+                next();
+            }
+        } else {
+            next();
+        }
+    });
+
+    return router;
+};

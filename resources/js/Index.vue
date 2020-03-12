@@ -11,6 +11,10 @@
           </router-link>
         </li>
 
+        <li class="nav-item" v-if="isLoggedIn">
+          <router-link :to="{name: 'trips'}" class="nav-link">Trips</router-link>
+        </li>
+
         <li class="nav-item dropdown" v-if="isLoggedIn">
           <a
             class="nav-link dropdown-toggle"
