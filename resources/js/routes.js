@@ -3,6 +3,7 @@ import Basket from "./basket/Basket";
 import Bookable from "./bookable/Bookable";
 import Bookables from "./bookables/Bookables";
 import Review from "./review/Review";
+import { isLoggedIn } from "./shared/utils/auth";
 
 const routes = [
     {
@@ -62,8 +63,9 @@ export default function router(store) {
     });
 
     router.beforeEach((to, from, next) => {
+        console.log('route');
         if (to.matched.some(record => record.meta.requiresAuth)) {
-            if (!store.state.isLoggedIn) {
+            if (!isLoggedIn()) {
                 next({ name: "login" });
             } else {
                 next();

@@ -17,6 +17,11 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 
 Vue.filter("fromNow", value => moment(value).fromNow());
+Vue.filter("shortDate", value => {
+    const date = moment(value);
+
+    return date.year() === moment().year() ? date.format("MMM Do") : date.format("MMM Do YY")
+})
 
 Vue.component("star-rating", StarRating);
 Vue.component("fatal-error", FatalError);
@@ -45,7 +50,9 @@ const app = new Vue({
         index: Index
     },
     beforeCreate() {
+        console.log('store');
         this.$store.dispatch("loadStoredState");
         this.$store.dispatch("loadUser");
+        console.log('store loaded');
     },
 });

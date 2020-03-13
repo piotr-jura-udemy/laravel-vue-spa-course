@@ -8,13 +8,13 @@
           <div class="card-body">
             <div v-if="loading">Loading...</div>
             <div v-if="hasBooking">
-              <p>
+              <div>
                 Stayed at
                 <router-link
                   :to="{name: 'bookable', params: { id: booking.bookable.bookable_id}}"
                 >{{ booking.bookable.title }}</router-link>
-              </p>
-              <p>From {{ booking.from }} to {{ booking.to }}</p>
+              </div>
+              <div>From {{ booking.from | shortDate }} to {{ booking.to | shortDate }}</div>
             </div>
           </div>
         </div>
@@ -81,15 +81,15 @@ export default {
     this.loading = true;
 
     try {
-      this.existingReview = (await axios.get(
-        `/api/reviews/${this.review.id}`
-      )).data.data;
+      this.existingReview = (
+        await axios.get(`/api/reviews/${this.review.id}`)
+      ).data.data;
     } catch (err) {
       if (is404(err)) {
         try {
-          this.booking = (await axios.get(
-            `/api/booking-by-review/${this.review.id}`
-          )).data.data;
+          this.booking = (
+            await axios.get(`/api/booking-by-review/${this.review.id}`)
+          ).data.data;
         } catch (err) {
           this.error = !is404(err);
         }
