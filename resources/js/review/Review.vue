@@ -34,8 +34,8 @@
               <label for="content" class="text-muted">Describe your expirience with</label>
               <textarea
                 name="content"
-                cols="30"
-                rows="10"
+                cols="10"
+                rows="4"
                 class="form-control"
                 v-model="review.content"
                 :class="[{'is-invalid': errorFor('content')}]"

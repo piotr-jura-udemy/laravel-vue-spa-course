@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="loading">Data is loading...</div>
+    <div v-if="loading" class="fa-7x text-center">
+      <i class="fas fa-cog fa-spin"></i>
+    </div>
     <column-view :items="bookables" columns="3" v-else>
       <template v-slot:default="slotProps">
         <bookable-list-item v-bind="slotProps.item"></bookable-list-item>

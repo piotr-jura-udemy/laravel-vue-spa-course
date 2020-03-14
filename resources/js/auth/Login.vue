@@ -8,7 +8,6 @@
             type="text"
             name="email"
             placeholder="Enter your e-mail"
-            label="E-mail"
             class="form-control"
             v-model="username"
             :class="[{'is-invalid': errorFor('email')}]"
@@ -22,12 +21,16 @@
             type="password"
             name="password"
             placeholder="Enter your password"
-            label="Password"
             class="form-control"
             v-model="password"
             :class="[{'is-invalid': errorFor('password')}]"
           />
           <v-errors :errors="errorFor('password')"></v-errors>
+        </div>
+
+        <div class="form-group form-check">
+          <input type="checkbox" name="remember" class="form-check-input" v-model="remember" />
+          <label for="remember" class="form-check-label">Remember me</label>
         </div>
 
         <button
@@ -61,7 +64,8 @@ export default {
     return {
       loading: false,
       username: null,
-      password: null
+      password: null,
+      remember: false
     };
   },
   methods: {
@@ -76,7 +80,8 @@ export default {
         // Attempt login
         await axios.post("/login", {
           email: this.username,
-          password: this.password
+          password: this.password,
+          remember: this.remember
         });
         logIn();
         this.$store.dispatch("loadUser");

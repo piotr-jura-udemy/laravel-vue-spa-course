@@ -1,9 +1,13 @@
 <template>
   <div>
-    <div v-if="loading">Data is loading...</div>
-    <column-view :items="trips" columns="3" v-slot:default="slotProps" v-else>
-      <trip :trip="slotProps.item"></trip>
-    </column-view>
+    <div v-if="loading" class="fa-7x text-center">
+      <i class="fas fa-cog fa-spin"></i>
+    </div>
+    <div v-else>
+      <column-view :items="trips" columns="3" v-slot:default="slotProps">
+        <trip :trip="slotProps.item"></trip>
+      </column-view>
+    </div>
   </div>
 </template>
 
