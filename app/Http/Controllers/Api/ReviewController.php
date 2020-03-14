@@ -35,6 +35,11 @@ class ReviewController extends Controller
         $review = Review::make($data);
         $review->booking_id = $booking->id;
         $review->bookable_id = $booking->bookable_id;
+
+        if ($request->user()) {
+            $review->author()->associate($request->user());
+        }
+
         $review->save();
 
         return new ReviewResource($review);

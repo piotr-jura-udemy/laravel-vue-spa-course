@@ -18,6 +18,11 @@ class Review extends Model
         return $this->belongsTo(Booking::class);
     }
 
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
     public function getIncrementing()
     {
         return false;
