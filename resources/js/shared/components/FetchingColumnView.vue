@@ -6,6 +6,8 @@
         <slot v-bind:item="slotProps.item" v-bind:column="slotProps.column"></slot>
       </column-view>
     </div>
+
+    <fatal-error v-if="!url"></fatal-error>
   </div>
 </template>
 

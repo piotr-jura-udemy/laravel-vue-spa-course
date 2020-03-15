@@ -61,6 +61,14 @@ const routes = [
         meta: {
             requiresAuth: true
         }
+    },
+    {
+        path: "/account/host",
+        component: require("./myaccount/Host").default,
+        name: "host",
+        meta: {
+            requiresAuth: true
+        }
     }
 ];
 

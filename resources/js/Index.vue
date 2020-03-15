@@ -4,6 +4,10 @@
       <router-link class="navbar-brand mr-auto" :to="{name: 'home'}">LaravelBnb</router-link>
 
       <ul class="navbar-nav">
+        <li class="nav-item" v-if="isLoggedIn">
+          <router-link :to="{name: 'host'}" class="nav-link">Host</router-link>
+        </li>
+
         <li class="nav-item">
           <router-link class="nav-link" :to="{name: 'basket'}">
             Basket
