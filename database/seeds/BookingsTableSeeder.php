@@ -1,7 +1,8 @@
 <?php
 
-use App\Bookable;
+use App\User;
 use App\Booking;
+use App\Bookable;
 use Illuminate\Database\Seeder;
 
 class BookingsTableSeeder extends Seeder
@@ -26,6 +27,7 @@ class BookingsTableSeeder extends Seeder
                     'to' => $to,
                     'price' => random_int(200, 5000)
                 ]);
+                $booking->customer()->associate(User::find(random_int(1, 200)));
                 $bookings->push($booking);
             }
 

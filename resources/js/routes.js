@@ -63,9 +63,17 @@ const routes = [
         }
     },
     {
-        path: "/account/host",
-        component: require("./myaccount/Host").default,
+        path: "/host",
+        component: require("./host/Host").default,
         name: "host",
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: "/host/bookable/:id",
+        component: require("./host/Bookable").default,
+        name: "host-bookable",
         meta: {
             requiresAuth: true
         }

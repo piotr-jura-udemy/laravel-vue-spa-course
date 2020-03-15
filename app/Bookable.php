@@ -17,6 +17,11 @@ class Bookable extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
     public function availableFor($from, $to): bool
     {
         return 0 === $this->bookings()->betweenDates($from, $to)->count();

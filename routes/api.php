@@ -35,7 +35,12 @@ Route::apiResource('reviews', 'Api\ReviewController')->only(['show', 'store']);
 
 Route::post('checkout', 'Api\CheckoutController')->name('checkout');
 
-Route::prefix('my')->middleware('auth')->group(function () {
+Route::name('my.')->prefix('my')->middleware('auth')->group(function () {
     Route::apiResource('bookings', 'Api\My\BookingController')->only(['index']);
     Route::apiResource('reviews', 'Api\My\ReviewController')->only(['index']);
+});
+
+Route::name('host.')->prefix('host')->middleware('auth')->group(function () {
+    Route::apiResource('bookables', 'Api\Host\BookableController')->only(['index']);
+    Route::apiResource('/bookings/{bookable}', 'Api\Host\BookableBookingController')->only(['index']);
 });
