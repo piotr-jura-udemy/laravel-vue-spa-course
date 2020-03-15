@@ -2,7 +2,7 @@
   <div style="padding: 1.25rem">
     <h6 class="text-uppercase text-secondary font-weight-bolder pt-4">Review List</h6>
 
-    <div v-if="loading">Loading...</div>
+    <loading-circle v-if="loading"></loading-circle>
     <div v-else>
       <div class="border-bottom d-none d-md-block" v-for="(review, index) in reviews" :key="index">
         <div class="row pt-4">

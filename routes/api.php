@@ -37,4 +37,5 @@ Route::post('checkout', 'Api\CheckoutController')->name('checkout');
 
 Route::prefix('my')->middleware('auth')->group(function () {
     Route::apiResource('bookings', 'Api\My\BookingController')->only(['index']);
+    Route::apiResource('reviews', 'Api\My\ReviewController')->only(['index']);
 });

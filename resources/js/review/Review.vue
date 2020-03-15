@@ -6,7 +6,7 @@
       <div :class="[{'col-md-4': twoColumns}, {'d-none': oneColumn}]">
         <div class="card">
           <div class="card-body">
-            <div v-if="loading">Loading...</div>
+            <loading-circle v-if="loading"></loading-circle>
             <div v-if="hasBooking">
               <div>
                 Stayed at
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div :class="[{'col-md-8': twoColumns}, {'col-md-12': oneColumn}]">
-        <div v-if="loading">Loading...</div>
+        <loading-circle v-if="loading"></loading-circle>
         <div v-else>
           <div v-if="alreadyReviewed">
             <h3>You've already left a review for this booking!</h3>

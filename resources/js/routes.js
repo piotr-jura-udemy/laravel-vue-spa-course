@@ -53,6 +53,14 @@ const routes = [
         meta: {
             requiresAuth: true
         }
+    },
+    {
+        path: "/account/reviews",
+        component: require("./myaccount/Reviews").default,
+        name: "reviews",
+        meta: {
+            requiresAuth: true
+        }
     }
 ];
 

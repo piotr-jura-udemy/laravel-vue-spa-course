@@ -8,7 +8,7 @@
             <hr />
             <article>{{ bookable.description }}</article>
           </div>
-          <div v-else>Loading...</div>
+          <loading-circle v-else></loading-circle>
         </div>
       </div>
 
@@ -94,11 +94,11 @@ export default {
       }
 
       try {
-        this.price = (await axios.get(
-          `/api/bookables/${this.bookable.id}/price?from=${
-            this.lastSearch.from
-          }&to=${this.lastSearch.to}`
-        )).data.data;
+        this.price = (
+          await axios.get(
+            `/api/bookables/${this.bookable.id}/price?from=${this.lastSearch.from}&to=${this.lastSearch.to}`
+          )
+        ).data.data;
       } catch (err) {
         this.price = null;
       }

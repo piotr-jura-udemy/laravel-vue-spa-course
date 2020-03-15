@@ -7,6 +7,7 @@ import Index from "./Index";
 import router from "./routes";
 import ColumnView from "./shared/components/ColumnView";
 import FatalError from "./shared/components/FatalError";
+import FetchingColumnView from "./shared/components/FetchingColumnView";
 import StarRating from "./shared/components/StarRating";
 import Success from "./shared/components/Success";
 import ValidationErrors from "./shared/components/ValidationErrors";
@@ -28,6 +29,8 @@ Vue.component("fatal-error", FatalError);
 Vue.component("success", Success);
 Vue.component("v-errors", ValidationErrors);
 Vue.component("column-view", ColumnView);
+Vue.component("fetching-column-view", FetchingColumnView);
+Vue.component("loading-circle", require('./shared/components/LoadingCircle').default);
 
 const store = new Vuex.Store(storeDefinition);
 

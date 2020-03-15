@@ -25,10 +25,11 @@
             aria-haspopup="true"
             aria-expanded="false"
           >Account</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Profile</a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <router-link :to="{name: 'reviews'}" class="dropdown-item">Reviews</router-link>
 
             <div class="dropdown-divider"></div>
+
             <a class="dropdown-item" href="#" @click="logout">Logout</a>
           </div>
         </li>
