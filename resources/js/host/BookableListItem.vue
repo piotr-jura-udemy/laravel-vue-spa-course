@@ -1,7 +1,9 @@
 <template>
   <div class="card card-body">
     <h5>
-      <router-link :to="{name: 'host-bookable', params: {id: bookable.id}}">{{ bookable.title }}</router-link>
+      <router-link
+        :to="{name: 'host-bookable', params: {id: bookable.id, page: 'bookings'}}"
+      >{{ bookable.title }}</router-link>
     </h5>
     <div>Since {{ bookable.created_at | shortDate }}</div>
     <div>

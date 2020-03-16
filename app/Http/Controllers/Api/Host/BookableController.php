@@ -27,4 +27,12 @@ class BookableController extends Controller
 
         return ['data' => $bookable];
     }
+
+    public function store(Request $request)
+    {
+        $bookable = Bookable::make($request->all());
+        $bookable->owner()->associate($request->user())->save();
+
+        return ['data' => $bookable];
+    }
 }

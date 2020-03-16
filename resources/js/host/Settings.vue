@@ -57,6 +57,15 @@ export default {
     };
   },
   async created() {
+    if (undefined == this.$route.params.id) {
+      this.bookable = {
+        title: null,
+        description: null,
+        price: null
+      };
+      return;
+    }
+
     this.loading = true;
 
     try {
@@ -72,11 +81,19 @@ export default {
       this.saving = true;
 
       try {
-        this.bookable = (
-          await axios.put("/api/host/bookables/" + this.$route.params.id, {
-            ...this.bookable
-          })
-        ).response.data;
+        if (undefined == this.$route.params.id) {
+          this.bookable = (
+            await axios.post("/api/host/bookables", {
+              ...this.bookable
+            })
+          ).response.data;
+        } else {
+          this.bookable = (
+            await axios.put("/api/host/bookables/" + this.$route.params.id, {
+              ...this.bookable
+            })
+          ).response.data;
+        }
       } catch (error) {
         this.errors = error.response && error.response.data.errors;
       }

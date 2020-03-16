@@ -2,34 +2,31 @@
   <div>
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a
+        <router-link
           class="nav-link"
-          :class="{active: active == 'bookings'}"
-          href="#"
-          @click.prevent="active = 'bookings'"
-        >Bookings</a>
+          :class="{active: $route.params.page == 'bookings', disabled: !$route.params.page}"
+          :to="{name: 'host-bookable', params: {id: $route.params.id, page: 'bookings'}}"
+        >Bookings</router-link>
       </li>
       <li class="nav-item">
-        <a
+        <router-link
           class="nav-link"
-          :class="{active: active == 'reviews'}"
-          href="#"
-          @click.prevent="active = 'reviews'"
-        >Reviews</a>
+          :class="{active: $route.params.page == 'reviews', disabled: !$route.params.page}"
+          :to="{name: 'host-bookable', params: {id: $route.params.id, page: 'reviews'}}"
+        >Reviews</router-link>
       </li>
       <li class="nav-item">
-        <a
+        <router-link
           class="nav-link"
-          :class="{active: active == 'settings'}"
-          href="#"
-          @click.prevent="active = 'settings'"
-        >Settings</a>
+          :class="{active: $route.params.page == 'settings' || !$route.params.page}"
+          :to="{name: 'host-bookable', params: {id: $route.params.id, page: 'settings'}}"
+        >Settings</router-link>
       </li>
     </ul>
     <div class="pt-4 pr-2 pl-2 card card-body border-top-0 rounded-0">
-      <bookings v-if="active=='bookings'"></bookings>
-      <reviews v-if="active=='reviews'"></reviews>
-      <settings v-if="active=='settings'"></settings>
+      <bookings v-if="$route.params.page=='bookings'"></bookings>
+      <reviews v-if="$route.params.page=='reviews'"></reviews>
+      <settings v-if="$route.params.page=='settings' || !$route.params.page"></settings>
     </div>
   </div>
 </template>
@@ -44,14 +41,6 @@ export default {
     Bookings,
     Reviews,
     Settings
-  },
-  data() {
-    return {
-      active: "bookings"
-    };
-  },
-  methods: {
-    async load() {}
   }
 };
 </script>
