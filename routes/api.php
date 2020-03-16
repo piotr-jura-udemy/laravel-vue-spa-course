@@ -41,6 +41,7 @@ Route::name('my.')->prefix('my')->middleware('auth')->group(function () {
 });
 
 Route::name('host.')->prefix('host')->middleware('auth')->group(function () {
-    Route::apiResource('bookables', 'Api\Host\BookableController')->only(['index']);
+    Route::apiResource('bookables', 'Api\Host\BookableController')->only(['index', 'show']);
     Route::apiResource('/bookings/{bookable}', 'Api\Host\BookableBookingController')->only(['index']);
+    Route::apiResource('/reviews/{bookable}', 'Api\Host\BookableReviewController')->only(['index']);
 });

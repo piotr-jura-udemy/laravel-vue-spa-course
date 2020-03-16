@@ -19,9 +19,3 @@
     </fetching-column-view>
   </div>
 </template>
-
-<script>
-export default {
-  components: {}
-};
-</script>

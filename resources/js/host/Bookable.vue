@@ -26,7 +26,7 @@
         >Settings</a>
       </li>
     </ul>
-    <div class="pt-4 pr-2 pl-2">
+    <div class="pt-4 pr-2 pl-2 card card-body border-top-0 rounded-0">
       <bookings v-if="active=='bookings'"></bookings>
       <reviews v-if="active=='reviews'"></reviews>
       <settings v-if="active=='settings'"></settings>

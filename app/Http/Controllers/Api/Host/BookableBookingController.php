@@ -10,6 +10,9 @@ class BookableBookingController extends Controller
 {
     public function index(Bookable $bookable)
     {
-        return ['data' => $bookable->bookings()->latest()->get()];
+        return [
+            'data' => $bookable->bookings()
+                ->with('customer')->latest()->get()
+        ];
     }
 }
