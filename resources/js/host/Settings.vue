@@ -3,10 +3,10 @@
     <loading-circle v-if="loading"></loading-circle>
     <form v-else>
       <div class="form-group">
-        <label for="name">Name</label>
+        <label for="title">Name</label>
         <input
           type="text"
-          name="name"
+          name="title"
           placeholder="Name of the object"
           class="form-control"
           v-model="bookable.title"
@@ -35,7 +35,12 @@
         />
       </div>
 
-      <button type="submit" class="btn btn-primary btn-lg btn-block" :disabled="loading">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg btn-block"
+        :disabled="saving"
+        @click.prevent="save"
+      >Save</button>
     </form>
   </div>
 </template>
@@ -47,7 +52,8 @@ export default {
   data() {
     return {
       bookable: null,
-      loading: false
+      loading: false,
+      saving: false
     };
   },
   async created() {
@@ -60,6 +66,23 @@ export default {
     } catch (error) {}
 
     this.loading = false;
+  },
+  methods: {
+    async save() {
+      this.saving = true;
+
+      try {
+        this.bookable = (
+          await axios.put("/api/host/bookables/" + this.$route.params.id, {
+            ...this.bookable
+          })
+        ).response.data;
+      } catch (error) {
+        this.errors = error.response && error.response.data.errors;
+      }
+
+      this.saving = false;
+    }
   }
 };
 </script>

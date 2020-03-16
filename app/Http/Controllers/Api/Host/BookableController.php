@@ -19,4 +19,12 @@ class BookableController extends Controller
     {
         return ['data' => $bookable];
     }
+
+    public function update(Bookable $bookable, Request $request)
+    {
+        $bookable->fill($request->all());
+        $bookable->save();
+
+        return ['data' => $bookable];
+    }
 }

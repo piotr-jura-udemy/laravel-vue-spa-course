@@ -7,6 +7,8 @@ use Illuminate\Support\Carbon;
 
 class Bookable extends Model
 {
+    protected $fillable = ['title', 'description', 'price'];
+
     public function bookings()
     {
         return $this->hasMany(Booking::class);
