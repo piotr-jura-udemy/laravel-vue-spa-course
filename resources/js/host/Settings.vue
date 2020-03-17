@@ -86,7 +86,13 @@ export default {
             await axios.post("/api/host/bookables", {
               ...this.bookable
             })
-          ).response.data;
+          ).data.data;
+          this.saving = false;
+
+          this.$router.push({
+            name: "host-bookable",
+            params: { id: this.bookable.id, page: "settings" }
+          });
         } else {
           this.bookable = (
             await axios.put("/api/host/bookables/" + this.$route.params.id, {

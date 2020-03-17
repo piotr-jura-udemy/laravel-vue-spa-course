@@ -2,28 +2,16 @@
   <div>
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <router-link
-          class="nav-link"
-          :class="{active: $route.params.page == 'bookings', disabled: !$route.params.page}"
-          :to="{name: 'host-bookable', params: {id: $route.params.id, page: 'bookings'}}"
-        >Bookings</router-link>
+        <router-link class="nav-link" :class="css('bookings')" :to="link('bookings')">Bookings</router-link>
       </li>
       <li class="nav-item">
-        <router-link
-          class="nav-link"
-          :class="{active: $route.params.page == 'reviews', disabled: !$route.params.page}"
-          :to="{name: 'host-bookable', params: {id: $route.params.id, page: 'reviews'}}"
-        >Reviews</router-link>
+        <router-link class="nav-link" :class="css('reviews')" :to="link('reviews')">Reviews</router-link>
       </li>
       <li class="nav-item">
-        <router-link
-          class="nav-link"
-          :class="{active: $route.params.page == 'settings' || !$route.params.page}"
-          :to="{name: 'host-bookable', params: {id: $route.params.id, page: 'settings'}}"
-        >Settings</router-link>
+        <router-link class="nav-link" :class="css('settings')" :to="link('settings')">Settings</router-link>
       </li>
     </ul>
-    <div class="pt-4 pr-2 pl-2 card card-body border-top-0 rounded-0">
+    <div class="card card-body border-top-0 rounded-0">
       <bookings v-if="$route.params.page=='bookings'"></bookings>
       <reviews v-if="$route.params.page=='reviews'"></reviews>
       <settings v-if="$route.params.page=='settings' || !$route.params.page"></settings>
@@ -41,6 +29,33 @@ export default {
     Bookings,
     Reviews,
     Settings
+  },
+  methods: {
+    link(toPage) {
+      if (!this.$route.params.id) {
+        return {};
+      }
+
+      return {
+        name: "host-bookable",
+        params: { id: this.$route.params.id, page: toPage }
+      };
+    },
+    css(page) {
+      const active = this.$route.params.page;
+
+      if ("settings" == page && (active == page || !active)) {
+        return {
+          active: "settings"
+        };
+      }
+
+      return {
+        active: active == page,
+        disabled: !active
+      };
+    },
+    show(page) {}
   }
 };
 </script>
