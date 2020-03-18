@@ -1,7 +1,7 @@
 <template>
   <div>
-    <loading-circle v-if="loading"></loading-circle>
-    <column-view :items="bookables" columns="3" v-else>
+    <loading-circle v-if="loading && !error"></loading-circle>
+    <column-view :items="bookables" columns="3" v-if="!loading && !error">
       <template v-slot:default="slotProps">
         <bookable-list-item v-bind="slotProps.item"></bookable-list-item>
       </template>

@@ -15,7 +15,7 @@
     </div>
     <div v-else>
       <slot name="empty">
-        <div class="text-center text-secondary">
+        <div class="text-center text-black-50">
           <i class="fas fa-search" style="font-size: 7rem"></i>
           <h3 class="mt-4">Nothing here yet</h3>
         </div>
