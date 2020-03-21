@@ -10,8 +10,8 @@
     "require": {
         "php": "^7.2",
         "fideloper/proxy": "^4.0",
-        "laravel/airlock": "^1.0",
         "laravel/framework": "^6.9",
+        "laravel/sanctum": "^2.0",
         "laravel/tinker": "^1.0"
     },
     "require-dev": {
