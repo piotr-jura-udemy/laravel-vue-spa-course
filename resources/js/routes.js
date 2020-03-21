@@ -24,6 +24,26 @@ const routes = [
         path: "/basket",
         component: Basket,
         name: "basket"
+    },
+    {
+        path: "/auth/login",
+        component: require("./auth/Login").default,
+        name: "login"
+    },
+    {
+        path: "/auth/register",
+        component: require("./auth/Register").default,
+        name: "register"
+    },
+    {
+        path: "/auth/reset",
+        component: require("./auth/RequestResetPassword").default,
+        name: "password-reset"
+    },
+    {
+        path: "/auth/reset/:token",
+        component: require("./auth/ResetPassword").default,
+        name: "password-reset"
     }
 ];
 

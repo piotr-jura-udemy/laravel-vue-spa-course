@@ -1,27 +1,28 @@
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
 
-// Variables
-@import "variables";
-
-// Font awesome
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 
+// Variables
+@import "variables";
+
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+    opacity: 0;
 }
 
-.v-enter-active, .v-leave-active {
-  transition: opacity 4s;
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 4s;
 }
 .v-enter, .v-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+    opacity: 0;
 }
