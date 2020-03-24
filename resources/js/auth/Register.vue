@@ -95,15 +95,13 @@ export default {
       this.errors = null;
 
       try {
-        await axios.get("/sanctum/csrf-cookie");
-        await axios.post("/login", {
-          email: this.email,
-          password: this.password
-        });
+        const response = await axios.post("/register", this.user);
 
-        logIn();
-        this.$store.dispatch("loadUser");
-        this.$router.push({ name: "home" });
+        if (201 == response.status) {
+          logIn();
+          this.$store.dispatch("loadUser");
+          this.$router.push({ name: "home" });
+        }
       } catch (error) {
         this.errors = error.response && error.response.data.errors;
       }
