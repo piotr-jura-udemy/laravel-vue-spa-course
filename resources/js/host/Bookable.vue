@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-pills">
       <li class="nav-item">
         <router-link class="nav-link" :class="css('bookings')" :to="link('bookings')">Bookings</router-link>
       </li>
@@ -11,7 +11,8 @@
         <router-link class="nav-link" :class="css('settings')" :to="link('settings')">Settings</router-link>
       </li>
     </ul>
-    <div class="card card-body border-top-0 rounded-0">
+
+    <div class="card-body">
       <bookings v-if="$route.params.page=='bookings'"></bookings>
       <reviews v-if="$route.params.page=='reviews'"></reviews>
       <settings v-if="$route.params.page=='settings' || !$route.params.page"></settings>

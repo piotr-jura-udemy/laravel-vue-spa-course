@@ -1,9 +1,9 @@
 <template>
   <div>
     <div v-if="items && items.length">
-      <div class="row mb-4" v-for="row in rows" :key="'row' + row">
+      <div class="row" v-for="row in rows" :key="'row' + row">
         <div
-          class="col d-flex align-items-stretch"
+          class="col-md d-flex align-items-stretch mb-4"
           v-for="(item, column) in itemsInRow(row)"
           :key="'row' + row + column"
         >

@@ -29,7 +29,7 @@
         </div>
 
         <div class="form-group form-check">
-          <input type="checkbox" name="remember" class="form-check-input" v-model="remember" />
+          <input type="checkbox" id="remember" name="remember" class="form-check-input" v-model="remember" />
           <label for="remember" class="form-check-label">Remember me</label>
         </div>
 
@@ -76,7 +76,7 @@ export default {
         // Reset errors first!
         this.errors = null;
         // Get CSRF cookie first
-        await axios.get("/airlock/csrf-cookie");
+        await axios.get("/sanctum/csrf-cookie");
         // Attempt login
         await axios.post("/login", {
           email: this.username,

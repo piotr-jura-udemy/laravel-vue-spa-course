@@ -2,14 +2,14 @@
   <div class="card w-100">
     <div class="card-body">
       <div class="w-100">
-        <small class="font-weight-bold">{{ trip.from | shortDate }} to {{ trip.to | shortDate }}</small>
+        <small class="font-weight-bold text-muted">{{ trip.from | shortDate }} to {{ trip.to | shortDate }}</small>
       </div>
       <h5>
         <router-link
           :to="{name: 'bookable', params: {id: trip.bookable.bookable_id}}"
         >{{ trip.bookable.title }}</router-link>
       </h5>
-      <div>Paid {{ trip.price }}$</div>
+      <div>${{ trip.price }}</div>
 
       <div v-if="trip.review_key">
         <router-link :to="{name: 'review', params: {id: trip.review_key}}">Leave a review</router-link>

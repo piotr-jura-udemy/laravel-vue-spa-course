@@ -7,7 +7,7 @@
       </template>
     </column-view>
 
-    <fatal-error v-if="error">Shit...</fatal-error>
+    <fatal-error v-if="error">Could not load items...</fatal-error>
   </div>
 </template>
 

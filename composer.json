@@ -11,11 +11,11 @@
         "php": "^7.2",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.9",
+        "laravel/sanctum": "^2.0",
         "laravel/tinker": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
-        "barryvdh/laravel-ide-helper": "^2.6",
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
         "laravel/ui": "^1.1",

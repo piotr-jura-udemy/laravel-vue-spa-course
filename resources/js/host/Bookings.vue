@@ -2,7 +2,7 @@
   <div>
     <fetching-column-view
       :url="'/api/host/bookings/' + $route.params.id"
-      :columns="2"
+      :columns="3"
       v-slot:default="{ item }"
     >
       <div class="card-body">

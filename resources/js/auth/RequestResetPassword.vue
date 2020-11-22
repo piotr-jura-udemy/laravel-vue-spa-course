@@ -45,7 +45,7 @@ export default {
       try {
         this.loading = true;
         this.errors = null;
-        await axios.get("/airlock/csrf-cookie");
+        await axios.get("/sanctum/csrf-cookie");
         this.success =
           200 ==
           (await axios.post("/password/email", { email: this.email })).status;
