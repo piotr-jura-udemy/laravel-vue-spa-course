@@ -4,7 +4,7 @@
     <div v-if="!loading && items">
       <div class="row">
         <div
-          class="col-md-4 col-sm-6 col-lg-3 d-flex align-items-stretch mb-4"
+          class="col-sm-6 col-lg-3 d-flex align-items-stretch mb-4"
           v-for="item in items"
           :key="item.id"
         >
@@ -15,16 +15,16 @@
               </div>
               <h5>
                 <router-link
-                  :to="{name: 'bookable', params: {id: item.bookable.id}}"
-                >{{ item.bookable.title }}</router-link>
+                  :to="{name: 'bookable', params: {id: item.bookable_id}}"
+                >{{ item.bookable_title }}</router-link>
               </h5>
               <div>${{ item.price }}</div>
 
-              <div v-if="!item.review">
+              <div v-if="!item.rating">
                 <router-link :to="{name: 'review', params: {id: item.review_key}}">Leave a review</router-link>
               </div>
               <div v-else>
-                <star-rating :value="item.review.rating" style="padding-top: 5px"></star-rating>
+                <star-rating :value="item.rating" style="padding-top: 5px"></star-rating>
               </div>
             </div>
           </div>
@@ -49,7 +49,7 @@ export default {
     this.loading = true;
 
     try {
-      this.items = (await axios.get("/api/account/customer/trips")).data;
+      this.items = (await axios.get("/api/account/customer/trips")).data.data;
     } catch (error) {}
 
     this.loading = false;

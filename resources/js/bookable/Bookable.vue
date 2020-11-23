@@ -3,12 +3,17 @@
     <div class="col-md-8 pb-4">
       <div class="card">
         <div class="card-body">
-          <div v-if="!loading">
+          <div v-if="loading">Loading...</div>
+          <div v-if="!loading && bookable">
             <h2>{{ bookable.title }}</h2>
             <hr />
             <article>{{ bookable.description }}</article>
           </div>
-          <div v-else>Loading...</div>
+          <div v-if="!loading && !bookable" class="text-muted">
+            <h2>Error</h2>
+            <hr/>
+            <article>Failed loading this object data. Try again later.</article>
+          </div>
         </div>
       </div>
 
@@ -67,12 +72,14 @@ export default {
       price: null
     };
   },
-  created() {
+  async created() {
     this.loading = true;
-    axios.get(`/api/bookables/${this.$route.params.id}`).then(response => {
-      this.bookable = response.data.data;
-      this.loading = false;
-    });
+
+    try {
+      this.bookable = (await axios.get(`/api/bookables/${this.$route.params.id}`)).data.data;
+    } catch (error) {}
+
+    this.loading = false;
   },
   computed: {
     ...mapState({
@@ -99,7 +106,7 @@ export default {
             this.lastSearch.from
           }&to=${this.lastSearch.to}`
         )).data.data;
-      } catch (err) {
+      } catch (error) {
         this.price = null;
       }
     },

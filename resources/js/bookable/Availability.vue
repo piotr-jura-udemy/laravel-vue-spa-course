@@ -5,6 +5,7 @@
       <transition name="fade">
         <span v-if="noAvailability" class="text-danger">(NOT AVAILABLE)</span>
         <span v-if="hasAvailability" class="text-success">(AVAILABLE)</span>
+        <span v-if="isError" class="text-danger">(ERROR)</span>
       </transition>
     </h6>
 
@@ -92,14 +93,14 @@ export default {
     }
   },
   computed: {
-    hasErrors() {
-      return 422 === this.status && this.errors !== null;
-    },
     hasAvailability() {
       return 200 === this.status;
     },
     noAvailability() {
       return 404 === this.status;
+    },
+    isError() {
+      return [422, 500].includes(this.status);
     }
   }
 };
