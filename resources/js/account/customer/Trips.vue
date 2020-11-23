@@ -2,11 +2,11 @@
   <div>
     <div v-if="loading">Data is loading...</div>
     <div v-if="!loading && items">
-      <div class="row" v-for="(row, index) in rows" :key="'row' + index">
+      <div class="row">
         <div
-          class="col-md-4 d-flex align-items-stretch mb-4"
-          v-for="(item, column) in row"
-          :key="'row' + row + column"
+          class="col-md-4 col-sm-6 col-lg-3 d-flex align-items-stretch mb-4"
+          v-for="item in items"
+          :key="item.id"
         >
           <div class="card w-100">
             <div class="card-body">
@@ -42,27 +42,8 @@ export default {
   data() {
     return {
       items: null,
-      loading: false,
-      columns: 3
+      loading: false
     };
-  },
-  computed: {
-    rows() {
-      if (null === this.items) {
-        return [];
-      }
-
-      let slicesLeft = Math.ceil(this.items.length / this.columns);
-      const result = [];
-
-      while (slicesLeft > 0) {
-        const sliceFrom = (slicesLeft - 1) * this.columns;
-        result.push(this.items.slice(sliceFrom, sliceFrom + this.columns));
-        slicesLeft--;
-      }
-
-      return result.reverse();
-    }
   },
   async created() {
     this.loading = true;

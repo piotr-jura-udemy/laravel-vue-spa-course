@@ -2,11 +2,11 @@
   <div>
     <div v-if="loading">Data is loading...</div>
     <div v-else>
-      <div class="row" v-for="(row, index) in rows" :key="'row' + index">
+      <div class="row">
         <div
-          class="col-md-4 d-flex align-items-stretch mb-4"
-          v-for="(bookable, column) in row"
-          :key="'row' + row + column"
+          class="col-md-4 col-lg-3 col-sm-6 d-flex align-items-stretch mb-4"
+          v-for="bookable in bookables"
+          :key="bookable.id"
         >
           <bookable-list-item v-bind="bookable"></bookable-list-item>
         </div>
@@ -25,27 +25,8 @@ export default {
   data() {
     return {
       bookables: null,
-      loading: false,
-      columns: 3
+      loading: false
     };
-  },
-  computed: {
-    rows() {
-      if (null === this.bookables) {
-        return [];
-      }
-
-      let slicesLeft = Math.ceil(this.bookables.length / this.columns);
-      const result = [];
-
-      while (slicesLeft > 0) {
-        const sliceFrom = (slicesLeft - 1) * this.columns;
-        result.push(this.bookables.slice(sliceFrom, sliceFrom + this.columns));
-        slicesLeft--;
-      }
-
-      return result.reverse();
-    }
   },
   created() {
     this.loading = true;
