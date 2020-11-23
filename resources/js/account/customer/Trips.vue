@@ -32,7 +32,10 @@
       </div>
     </div>
     <div v-if="!loading && !items">
-      <fatal-error></fatal-error>
+      <fatal-error>
+        <template v-slot:header>Error</template>
+        <template v-slot:subheader>We were unable to load your trips</template>
+      </fatal-error>
     </div>
   </div>
 </template>

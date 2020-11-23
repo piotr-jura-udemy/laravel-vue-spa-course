@@ -4,7 +4,7 @@
     <fatal-error v-if="error"></fatal-error>
     <div class="row" v-if="!success && !error">
       <div :class="[{'col-md-4': twoColumns}, {'d-none': oneColumn}]">
-        <div class="card">
+        <div class="card mb-4">
           <div class="card-body">
             <div v-if="loading">Loading...</div>
             <div v-if="hasBooking">
@@ -81,15 +81,15 @@ export default {
     this.loading = true;
 
     try {
-      this.existingReview = (await axios.get(
-        `/api/reviews/${this.review.id}`
-      )).data.data;
+      this.existingReview = (
+        await axios.get(`/api/reviews/${this.review.id}`)
+      ).data.data;
     } catch (err) {
       if (is404(err)) {
         try {
-          this.booking = (await axios.get(
-            `/api/booking-by-review/${this.review.id}`
-          )).data.data;
+          this.booking = (
+            await axios.get(`/api/booking-by-review/${this.review.id}`)
+          ).data.data;
         } catch (err) {
           this.error = !is404(err);
         }
@@ -118,30 +118,28 @@ export default {
     }
   },
   methods: {
-    submit() {
-      // 3. Store the review
+    async submit() {
       this.errors = null;
+      this.error = false;
       this.sending = true;
       this.success = false;
 
-      axios
-        .post(`/api/reviews`, this.review)
-        .then(response => {
-          this.success = 201 === response.status;
-        })
-        .catch(err => {
-          if (is422(err)) {
-            const errors = err.response.data.errors;
+      try {
+        this.success =
+          201 === (await axios.post(`/api/reviews`, this.review)).status;
+      } catch (error) {
+        if (is422(error)) {
+          const errors = error.response.data.errors;
 
-            if (errors["content"] && 1 === _.size(errors)) {
-              this.errors = errors;
-              return;
-            }
+          if (errors["content"] && 1 === _.size(errors)) {
+            this.errors = errors;
           }
-
+        } else {
           this.error = true;
-        })
-        .then(() => (this.sending = false));
+        }
+      }
+
+      this.sending = false;
     }
   }
 };

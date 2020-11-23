@@ -1,7 +1,12 @@
 <template>
   <div>
-    <success v-if="success">Congratulations on your purchase!</success>
-    <div class="row" v-else>
+    <success v-if="success && !critical">Congratulations on your purchase!</success>
+    <fatal-error v-if="critical && !success">
+      <template v-slot:header>Error</template>
+      <template v-slot:subheader>We were unable to complete the booking.</template>
+      <template v-slot:content>Please refresh the page and try again. You might have to sign-in again.</template>
+    </fatal-error>
+    <div class="row" v-if="!success && !critical">
       <div class="col-md-8" v-if="itemsInBasket">
         <div class="row">
           <div class="col-md-6 form-group">
@@ -160,6 +165,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import validationErrors from "./../shared/mixins/validationErrors";
+import { is419 } from '../shared/utils/response';
 
 export default {
   mixins: [validationErrors],
@@ -167,6 +173,7 @@ export default {
     return {
       loading: false,
       bookingAttempted: false,
+      critical: false,
       customer: {
         first_names: null,
         last_name: null,
@@ -193,6 +200,7 @@ export default {
       this.loading = true;
       this.bookingAttempted = false;
       this.errors = null;
+      this.critical = false;
 
       try {
         await axios.post(`/api/checkout`, {
@@ -205,7 +213,11 @@ export default {
         });
         this.$store.dispatch("clearBasket");
       } catch (error) {
-        this.errors = error.response && error.response.data.errors;
+        this.errors = _.get(error, 'response.data.errors', null);
+
+        if (is419(error)) {
+          this.critical = true;
+        }
       }
 
       this.loading = false;
