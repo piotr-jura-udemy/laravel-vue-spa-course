@@ -20,7 +20,7 @@ class BookableReviewController extends Controller
         $bookable = Bookable::findOrFail($id);
 
         return BookableReviewIndexResource::collection(
-            $bookable->reviews()->latest()->get()
+            $bookable->reviews()->with('customer')->latest()->get()
         );
     }
 }

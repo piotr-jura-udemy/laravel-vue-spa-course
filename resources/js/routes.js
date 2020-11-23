@@ -34,6 +34,11 @@ const routes = [
         path: "/auth/register",
         component: require("./auth/Register").default,
         name: "register"
+    },
+    {
+      path: "/account/trips",
+      component: require("./account/customer/Trips").default,
+      name: "account-trips"
     }
 ];
 

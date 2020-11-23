@@ -1,10 +1,10 @@
 <template>
-  <div style="padding: 1.25rem">
+  <div class="d-none d-md-block">
     <h6 class="text-uppercase text-secondary font-weight-bolder pt-4">Review List</h6>
 
     <div v-if="loading">Loading...</div>
     <div v-else>
-      <div class="border-bottom d-none d-md-block" v-for="(review, index) in reviews" :key="index">
+      <div class="border-bottom" v-for="(review, index) in reviews" :key="index">
         <div class="row pt-4">
           <div class="col-md-6">Piotr Jura</div>
           <div class="col-md-6 d-flex justify-content-end">

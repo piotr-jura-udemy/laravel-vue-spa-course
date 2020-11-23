@@ -20,6 +20,9 @@
         </li>
 
         <li class="nav-item" v-if="isLoggedIn">
+          <router-link :to="{name: 'account-trips'}" class="nav-link">Trips</router-link>
+        </li>
+        <li class="nav-item" v-if="isLoggedIn">
           <a class="nav-link" href="#" @click.prevent="logout">Logout</a>
         </li>
       </ul>
@@ -56,10 +59,9 @@ export default {
     async logout() {
       try {
         axios.post("/logout");
-        this.$store.dispatch("logout");
-      } catch (error) {
-        this.$store.dispatch("logout");
-      }
+      } catch (error) {}
+
+      this.$store.dispatch("logout");
     }
   }
 };

@@ -32,3 +32,7 @@ Route::get('/booking-by-review/{reviewKey}', 'Api\BookingByReviewController')
 Route::apiResource('reviews', 'Api\ReviewController')->only(['show', 'store']);
 
 Route::post('checkout', 'Api\CheckoutController')->name('checkout');
+
+Route::prefix('account')->name('account.')->middleware('auth')->group(function () {
+    Route::get('customer/trips', 'Api\Account\Customer\TripController@index')->name('customer.trips.index');
+});

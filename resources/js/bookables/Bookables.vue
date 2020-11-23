@@ -2,16 +2,14 @@
   <div>
     <div v-if="loading">Data is loading...</div>
     <div v-else>
-      <div class="row mb-4" v-for="row in rows" :key="'row' + row">
+      <div class="row" v-for="(row, index) in rows" :key="'row' + index">
         <div
-          class="col d-flex align-items-stretch"
-          v-for="(bookable, column) in bookablesInRow(row)"
+          class="col-md-4 d-flex align-items-stretch mb-4"
+          v-for="(bookable, column) in row"
           :key="'row' + row + column"
         >
           <bookable-list-item v-bind="bookable"></bookable-list-item>
         </div>
-
-        <div class="col" v-for="p in placeholdersInRow(row)" :key="'placeholder' + row + p"></div>
       </div>
     </div>
   </div>
@@ -33,17 +31,20 @@ export default {
   },
   computed: {
     rows() {
-      return this.bookables === null
-        ? 0
-        : Math.ceil(this.bookables.length / this.columns);
-    }
-  },
-  methods: {
-    bookablesInRow(row) {
-      return this.bookables.slice((row - 1) * this.columns, row * this.columns);
-    },
-    placeholdersInRow(row) {
-      return this.columns - this.bookablesInRow(row).length;
+      if (null === this.bookables) {
+        return [];
+      }
+
+      let slicesLeft = Math.ceil(this.bookables.length / this.columns);
+      const result = [];
+
+      while (slicesLeft > 0) {
+        const sliceFrom = (slicesLeft - 1) * this.columns;
+        result.push(this.bookables.slice(sliceFrom, sliceFrom + this.columns));
+        slicesLeft--;
+      }
+
+      return result.reverse();
     }
   },
   created() {
