@@ -66,3 +66,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.navbar-nav > .nav-item > .router-link-exact-active {
+  color: royalblue;
+  font-weight: bold;
+}
+</style>
