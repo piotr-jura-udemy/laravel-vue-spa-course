@@ -6,21 +6,21 @@
       <div :class="[{'col-md-4': twoColumns}, {'d-none': oneColumn}]">
         <div class="card">
           <div class="card-body">
-            <div v-if="loading">Loading...</div>
+            <loading-circle v-if="loading"></loading-circle>
             <div v-if="hasBooking">
-              <p>
+              <div>
                 Stayed at
                 <router-link
                   :to="{name: 'bookable', params: { id: booking.bookable.bookable_id}}"
                 >{{ booking.bookable.title }}</router-link>
-              </p>
-              <p>From {{ booking.from }} to {{ booking.to }}</p>
+              </div>
+              <div>From {{ booking.from | shortDate }} to {{ booking.to | shortDate }}</div>
             </div>
           </div>
         </div>
       </div>
       <div :class="[{'col-md-8': twoColumns}, {'col-md-12': oneColumn}]">
-        <div v-if="loading">Loading...</div>
+        <loading-circle v-if="loading"></loading-circle>
         <div v-else>
           <div v-if="alreadyReviewed">
             <h3>You've already left a review for this booking!</h3>
@@ -34,8 +34,8 @@
               <label for="content" class="text-muted">Describe your expirience with</label>
               <textarea
                 name="content"
-                cols="30"
-                rows="10"
+                cols="10"
+                rows="4"
                 class="form-control"
                 v-model="review.content"
                 :class="[{'is-invalid': errorFor('content')}]"
@@ -81,15 +81,15 @@ export default {
     this.loading = true;
 
     try {
-      this.existingReview = (await axios.get(
-        `/api/reviews/${this.review.id}`
-      )).data.data;
+      this.existingReview = (
+        await axios.get(`/api/reviews/${this.review.id}`)
+      ).data.data;
     } catch (err) {
       if (is404(err)) {
         try {
-          this.booking = (await axios.get(
-            `/api/booking-by-review/${this.review.id}`
-          )).data.data;
+          this.booking = (
+            await axios.get(`/api/booking-by-review/${this.review.id}`)
+          ).data.data;
         } catch (err) {
           this.error = !is404(err);
         }

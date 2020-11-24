@@ -2,7 +2,7 @@
   <div class="card w-100">
     <div class="card-body">
       <router-link :to="{ name: 'bookable', params: { id } }">
-        <h5 class="card-title">{{ title }}</h5>
+        <h6 class="card-title">{{ title }}</h6>
       </router-link>
       <p class="card-text">{{ description }}</p>
     </div>

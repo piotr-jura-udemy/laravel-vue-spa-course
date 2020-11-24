@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8" v-if="itemsInBasket">
         <div class="row">
           <div class="col-md-6 form-group">
             <label for="first_names">First names</label>
@@ -59,6 +59,14 @@
           </div>
         </div>
       </div>
+      <div class="col-md-8" v-else>
+        <div class="jumbotron jumbotron-fluid text-center">
+          <div class="container">
+            <h1 class="display-4">Empty</h1>
+          </div>
+        </div>
+      </div>
+
       <div class="col-md-4">
         <div class="d-flex justify-content-between">
           <h6 class="text-uppercase text-secondary font-weight-bolder">Your Cart</h6>

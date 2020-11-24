@@ -1,0 +1,8 @@
+{
+    "git.ignoreLimitWarning": true,
+    "editor.fontFamily": "'Operator Mono',Hack",
+    "editor.tabSize": 2,
+    "breadcrumbs.enabled": false,
+    "editor.minimap.enabled": false,
+    "editor.fontSize": 18
+}

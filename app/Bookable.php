@@ -7,6 +7,8 @@ use Illuminate\Support\Carbon;
 
 class Bookable extends Model
 {
+    protected $fillable = ['title', 'description', 'price'];
+
     public function bookings()
     {
         return $this->hasMany(Booking::class);
@@ -15,6 +17,11 @@ class Bookable extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     public function availableFor($from, $to): bool

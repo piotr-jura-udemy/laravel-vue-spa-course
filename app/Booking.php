@@ -2,8 +2,10 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class Booking extends Model
@@ -23,6 +25,11 @@ class Booking extends Model
     public function address()
     {
         return $this->belongsTo(Address::class);
+    }
+
+    public function customer(): ?BelongsTo
+    {
+        return $this->belongsTo(User::class, 'customer_id');
     }
 
     public function scopeBetweenDates(Builder $query, $from, $to)

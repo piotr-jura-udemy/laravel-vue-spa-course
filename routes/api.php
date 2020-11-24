@@ -13,9 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 // Route::get('bookables', 'Api\BookableController@index');
 // Route::get('bookables/{id}', 'Api\BookableController@show');
@@ -34,3 +32,14 @@ Route::get('/booking-by-review/{reviewKey}', 'Api\BookingByReviewController')
 Route::apiResource('reviews', 'Api\ReviewController')->only(['show', 'store']);
 
 Route::post('checkout', 'Api\CheckoutController')->name('checkout');
+
+Route::name('my.')->prefix('my')->middleware('auth')->group(function () {
+    Route::apiResource('bookings', 'Api\My\BookingController')->only(['index']);
+    Route::apiResource('reviews', 'Api\My\ReviewController')->only(['index']);
+});
+
+Route::name('host.')->prefix('host')->middleware('auth')->group(function () {
+    Route::apiResource('bookables', 'Api\Host\BookableController')->only(['index', 'show', 'update', 'store']);
+    Route::apiResource('/bookings/{bookable}', 'Api\Host\BookableBookingController')->only(['index']);
+    Route::apiResource('/reviews/{bookable}', 'Api\Host\BookableReviewController')->only(['index']);
+});
