@@ -4,7 +4,9 @@
     <fatal-error v-if="critical && !success">
       <template v-slot:header>Error</template>
       <template v-slot:subheader>We were unable to complete the booking.</template>
-      <template v-slot:content>Please refresh the page and try again. You might have to sign-in again.</template>
+      <template
+        v-slot:content
+      >Please refresh the page and try again. You might have to sign-in again.</template>
     </fatal-error>
     <div class="row" v-if="!success && !critical">
       <div class="col-md-8" v-if="itemsInBasket">
@@ -132,7 +134,7 @@
         </div>
 
         <transition-group name="fade">
-          <div v-for="item in basket" :key="item.bookable.id">
+          <div v-for="(item, index) in basket" :key="item.bookable.id">
             <div class="pt-2 pb-2 border-top d-flex justify-content-between">
               <span>
                 <router-link
@@ -145,6 +147,14 @@
             <div class="pt-2 pb-2 d-flex justify-content-between">
               <span>From {{ item.dates.from }}</span>
               <span>To {{ item.dates.to }}</span>
+            </div>
+
+            <div
+              v-for="(err, i) in errorFor(`bookings.${index}`)"
+              :key="'err'+i"
+              class="text-danger text-sm"
+            >
+              <small>{{ err }}</small>
             </div>
 
             <div class="pt-2 pb-2 text-right">
@@ -165,7 +175,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import validationErrors from "./../shared/mixins/validationErrors";
-import { is419 } from '../shared/utils/response';
+import { is419 } from "../shared/utils/response";
 
 export default {
   mixins: [validationErrors],
@@ -213,7 +223,7 @@ export default {
         });
         this.$store.dispatch("clearBasket");
       } catch (error) {
-        this.errors = _.get(error, 'response.data.errors', null);
+        this.errors = _.get(error, "response.data.errors", null);
 
         if (is419(error)) {
           this.critical = true;
