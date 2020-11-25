@@ -31,7 +31,7 @@
               <star-rating class="fa-3x" v-model="review.rating"></star-rating>
             </div>
             <div class="form-group">
-              <label for="content" class="text-muted">Describe your expirience with</label>
+              <label for="content" class="text-muted">Describe your expirience:</label>
               <textarea
                 name="content"
                 cols="30"

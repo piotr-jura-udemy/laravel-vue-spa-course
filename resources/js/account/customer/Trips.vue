@@ -11,7 +11,11 @@
           <div class="card w-100">
             <div class="card-body">
               <div class="w-100">
-                <small class="font-weight-bold text-muted">{{ item.from }} to {{ item.to }}</small>
+                <small class="text-muted">
+                  <span class="font-weight-bold">{{ item.from | shortDate }}</span>
+                  <span class="text-muted">to</span>
+                  <span class="font-weight-bold">{{ item.to | shortDate }}</span>
+                </small>
               </div>
               <h5>
                 <router-link

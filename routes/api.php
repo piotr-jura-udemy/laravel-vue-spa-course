@@ -1,38 +1,31 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\Account\Customer\TripController;
+use App\Http\Controllers\Api\BookableAvailabilityController;
+use App\Http\Controllers\Api\BookableController;
+use App\Http\Controllers\Api\BookablePriceController;
+use App\Http\Controllers\Api\BookableReviewController;
+use App\Http\Controllers\Api\BookingByReviewController;
+use App\Http\Controllers\Api\CheckoutController;
+use App\Http\Controllers\Api\ReviewController;
+use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::apiResource('bookables', BookableController::class)->only(['index', 'show']);
 
+Route::prefix('bookables')->group(function() {
+    Route::get('{bookable}/availability', BookableAvailabilityController::class)
+        ->name('bookables.availability.show');
+    Route::get('{bookable}/reviews', BookableReviewController::class)
+        ->name('bookables.reviews.index');
+    Route::get('{bookable}/price', BookablePriceController::class)
+        ->name('bookables.price.show');
+});
 
-
-// Route::get('bookables', 'Api\BookableController@index');
-// Route::get('bookables/{id}', 'Api\BookableController@show');
-
-Route::apiResource('bookables', 'Api\BookableController')->only(['index', 'show']);
-Route::get('bookables/{bookable}/availability', 'Api\BookableAvailabilityController')
-    ->name('bookables.availability.show');
-Route::get('bookables/{bookable}/reviews', 'Api\BookableReviewController')
-    ->name('bookables.reviews.index');
-Route::get('bookables/{bookable}/price', 'Api\BookablePriceController')
-    ->name('bookables.price.show');
-
-Route::get('/booking-by-review/{reviewKey}', 'Api\BookingByReviewController')
+Route::get('/booking-by-review/{reviewKey}', BookingByReviewController::class)
     ->name('booking.by-review.show');
-
-Route::apiResource('reviews', 'Api\ReviewController')->only(['show', 'store']);
-
-Route::post('checkout', 'Api\CheckoutController')->name('checkout');
+Route::apiResource('reviews', ReviewController::class)->only(['show', 'store']);
+Route::post('checkout', CheckoutController::class)->name('checkout');
 
 Route::prefix('account')->name('account.')->middleware('auth')->group(function () {
-    Route::get('customer/trips', 'Api\Account\Customer\TripController@index')->name('customer.trips.index');
+    Route::get('customer/trips', [TripController::class, 'index'])->name('customer.trips.index');
 });
